@@ -1,7 +1,7 @@
 // API Link to Earthquakes - GeoJSON
 var source = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
 
-const api_key = "pk.eyJ1Ijoia3VsaW5pIiwiYSI6ImNpeWN6bjJ0NjAwcGYzMnJzOWdoNXNqbnEifQ.jEzGgLAwQnZCv9rA6UTfxQ"
+const api_key = "pk.eyJ1IjoiZGFuY29uZGUiLCJhIjoiY2swNjFpeTI2M2tjajNtcGZjOHFxcnYyciJ9.09MepzIYdFoIiO60iYroqQ"
 
 // Colors for marker
 function markerColor (mag) {
@@ -33,7 +33,7 @@ function changeSize (mag) {
 function createMap(earthquakes) {
   
     // Define satelitemap and darkmap layers
-    var satelitemap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+    var satellitemap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
       attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
       maxZoom: 18,
       id: "mapbox.satellite",
@@ -47,27 +47,25 @@ function createMap(earthquakes) {
       accessToken: api_key
     });
   
-    // Define a baseMaps object to hold our base layers
+    // BaseMaps object to hold our base layers
     var baseMaps = {
-      "Satelite Map": satelitemap,
+      "Satellite Map": satellitemap,
       "Dark Map": darkmap
     };
   
-    // Create overlay object to hold our overlay layer
+    // Overlay object to hold our overlay layer
     var overlayMaps = {
       Earthquakes: earthquakes
     };
   
-    // Create our map, giving it the satelitemap and earthquakes layers to display on load
+    // Create our map w/ satelitemap and earthquakes layers
     var myMap = L.map("map", {
       center: [31.57853542647338,-99.580078125],
       zoom: 3,
-      layers: [satelitemap, earthquakes]
+      layers: [satellitemap, earthquakes]
     });
   
     // Create a layer control
-    // Pass in our baseMaps and overlayMaps
-    // Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps, {
       collapsed: false
     }).addTo(myMap);
@@ -112,8 +110,6 @@ onEachFeature : function (feature, layer) {
   }
   });
     
-
-
   // Sending our earthquakes layer to the createMap function
   createMap(earthquakes);
 }
